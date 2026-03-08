@@ -2,6 +2,7 @@
   <q-tabs>
     <q-route-tab label="檢視班代出席時數" to="/attendance" />
     <q-route-tab label="列出連續未出席者" to="/attendance/serial_absence" />
+    <q-route-tab label="生成職務訴訟文書" to="/attendance/export_indictment" />
     <q-route-tab label="列出請假情況" to="/attendance/scheduled_absence" />
     <q-route-tab label="匯出期末時數與記功嘉獎表" to="/attendance/export" />
   </q-tabs>
@@ -13,7 +14,7 @@
       :loading="loading"
       :pagination="{ rowsPerPage: 25 }"
       :rows="absences"
-      :title="`${currentReign} 班代請假情況`"
+      :title="`${getCurrentReign()} 班代請假情況`"
       row-key="name"
     >
       <template v-slot:top-right>
@@ -33,7 +34,7 @@ import { meetingCollectionOfCurrentReign } from 'src/ts/models.ts';
 import { computed, ref, watch } from 'vue';
 import type { QTableColumn } from 'quasar';
 import { getAllUsers } from 'src/ts/auth.ts';
-import { currentReign, notifyError } from 'src/ts/utils.ts';
+import { getCurrentReign, notifyError } from 'src/ts/utils.ts';
 
 const accounts = ref(null as User[] | null);
 const meetings = meetingCollectionOfCurrentReign();
